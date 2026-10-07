@@ -4,11 +4,19 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
+import json
 
 etudiants = []
 choix = ""
 
+def sauvegarder_etudiants():
+    with open("etudiants.json", "w") as fichier:
+        json.dump(etudiants, fichier, indent=4)
+def charger_etudiants():
+    global etudiants
 
+    with open("etudiants.json", "r") as fichier:
+        etudiants = json.load(fichier)
 def ajouter_etudiants():
     nom = input("Nom de l'etudiant : ").strip()
     while nom == "":
@@ -30,6 +38,7 @@ def ajouter_etudiants():
     }
 
     etudiants.append(etudiant)
+    sauvegarder_etudiants()
     print("Etudiant ajouté !")
 
 def afficher_etudiants():
@@ -68,6 +77,7 @@ def supprimer_etudiants():
     for etudiant in etudiants:
       if etudiant["nom"] == nom_etudiant:
         etudiants.remove(etudiant)
+        sauvegarder_etudiants()
         print("Etudiant supprimé !")
         trouve = True
     if trouve == False:
@@ -92,15 +102,54 @@ def modifier_etudiants():
                     print("Note de l'etudiant invalide")
                     nouvel_note = int(input("Note de l'etudiant : "))
 
+            sauvegarder_etudiants()
 
-while choix != "6":
+def statistique():
+    if len(etudiants) == 0:
+        print("Erreur : La liste est vide !")
+        return
+    nombre = len(etudiants)
+    print("nombre total d'etdiants : ", nombre)
+
+    somme = 0
+    for etudiant in etudiants:
+        somme = somme + etudiant["note"]
+
+    moyenne = somme / len(etudiants)
+    print("moyenne des notes : ", moyenne)
+
+    meilleure_etudiant = ""
+    meilleure_note = 0
+    for etudiant in etudiants:
+       if etudiant["note"] > meilleure_note:
+           meilleure_note = etudiant["note"]
+           meilleure_etudiant = etudiant["nom"]
+
+    print("meilleure note : ", meilleure_note)
+    print("meilleure etudiant : ", meilleure_etudiant)
+    admis = 0
+    for etudiant in etudiants:
+        if etudiant["note"] >= 10:
+            admis = admis + 1
+            print("Nombre d'etudiants admis : ", admis)
+
+    ajournes = 0
+    for etudiant in etudiants:
+        if etudiant["note"] < 10:
+            ajournes = ajournes + 1
+            print("Nombre d'etudiants ajourne : ", ajournes)
+
+charger_etudiants()
+
+while choix != "7":
     print("\n--- MENU ---")
     print("1. Ajouter")
     print("2. Afficher")
     print("3.Rechercher")
     print("4.modifier")
     print("5. Supprimer")
-    print("6. Quitter")
+    print("6. statistique")
+    print("7. Quitter")
 
     choix = input("Choisis une option : ")
     if choix == "1":
@@ -121,6 +170,9 @@ while choix != "6":
         supprimer_etudiants()
 
     elif choix == "6":
+        statistique()
+
+    elif choix == "7":
         print("Au revoir")
     else:
         print("Choix invalide")
