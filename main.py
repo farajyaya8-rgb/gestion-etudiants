@@ -1,7 +1,4 @@
-# This is a sample Python script.
 
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
 import json
@@ -80,11 +77,6 @@ def rechercher_etudiants():
      if trouve == False:
         print("Etudiant introuvable !")
 
-def etudiant_existe(nom) :
-    if nom in etudiants:
-        return True
-    else:
-        return False
 
 def supprimer_etudiants():
     nom_etudiant = input("Quel etudiant veux-tu supprimer ? : ")
@@ -165,13 +157,13 @@ def statistique():
     for etudiant in etudiants:
         if etudiant["note"] >= 10:
             admis = admis + 1
-            print("Nombre d'etudiants admis : ", admis)
+    print("Nombre d'etudiants admis : ", admis)
 
     ajournes = 0
     for etudiant in etudiants:
         if etudiant["note"] < 10:
             ajournes = ajournes + 1
-            print("Nombre d'etudiants ajourne : ", ajournes)
+    print("Nombre d'etudiants ajourne : ", ajournes)
 
 charger_etudiants()
 
@@ -188,7 +180,7 @@ while choix != "7":
     choix = input("Choisis une option : ")
     if choix == "1":
         ajouter_etudiants()
-        print(etudiants)
+
 
     elif choix == "2":
         afficher_etudiants()
@@ -217,8 +209,4 @@ while choix != "7":
 
 
 
-#age = 0
-
-# Press the green button in the gutter to run the script.
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
