@@ -22,15 +22,31 @@ def ajouter_etudiants():
     while nom == "":
         print("Nom invalide")
         nom = input("Nom de l'etudiant : ").strip()
-    age = int(input("Age de l'etudiant : "))
-    while age <= 0:
-        print("age invalide ! ")
-        age = int(input("Age de l'etudiant : "))
 
-    note = int(input("Note de l'etudiant : "))
-    while note < 0 or note > 20:
-        print("Note de l'etudiant invalide")
-        note = int(input("Note de l'etudiant : "))
+    while True:
+        try:
+            age = int(input("Age de l'etudiant : "))
+            if age<=0:
+               print("age invalide ! ")
+            else:
+                break
+        except ValueError:
+            print("Tu dois entrer un nombre !")
+
+
+
+
+    while True:
+        try:
+            note = int(input("Note de l'etudiant : "))
+            if note < 0 or note > 20:
+                print("Note invalide ! ")
+            else:
+                break
+        except ValueError:
+            print("Tu dois entrer un nombre !")
+
+
     etudiant ={
         "nom": nom,
         "age": age,
@@ -44,10 +60,10 @@ def ajouter_etudiants():
 def afficher_etudiants():
     print("\nListe des étudiants :")
 
-    for etudiant in etudiants:
-        print("Nom :", etudiant["nom"])
-        print("Age :", etudiant["age"])
-        print("Note :", etudiant["note"])
+    for i, etudiant in enumerate(etudiants, start=1):
+        print(f"\n{i}.{etudiant['nom']}")
+        print(f" Age: {etudiant['age']}")
+        print(f" Note: {etudiant['note']}")
 
 def rechercher_etudiants():
 
@@ -92,15 +108,33 @@ def modifier_etudiants():
                 nouveau_nom = input("Nouveau nom :")
                 etudiant["nom"] = nouveau_nom
             elif choix == "age":
-                nouvel_age = int(input("Nouveau age :"))
-                etudiant["age"] = nouvel_age
+                while True:
+                    try:
+                        nouvel_age = int(input("Nouveau age :"))
+
+                        if nouvel_age <= 0:
+                            print("Age invalide ! ")
+                        else:
+                            etudiant["age"] = nouvel_age
+                            print("Age modifier avec succès !")
+                            break
+                    except ValueError:
+                        print("Tu dois entrer un age valide !")
+
 
             elif choix == "note":
-                nouvel_note = int(input("Nouvelle note :"))
-                etudiant["note"] = nouvel_note
-                while nouvel_note < 0 or nouvel_note > 20:
-                    print("Note de l'etudiant invalide")
-                    nouvel_note = int(input("Note de l'etudiant : "))
+                while True:
+                    try:
+                      nouvel_note = int(input("Nouvelle note :"))
+
+                      if nouvel_note < 0 or nouvel_note > 20:
+                         print("Note de l'etudiant invalide")
+                      else:
+                        etudiant["note"] = nouvel_note
+                        print("Note modifier avec succès !")
+                        break
+                    except ValueError:
+                        print("Tu dois entrer une note valide !")
 
             sauvegarder_etudiants()
 
